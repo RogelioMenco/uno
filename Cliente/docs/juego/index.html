@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNO</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!--link rel="stylesheet" href="style.css"-->
+    <link rel="stylesheet" href="carousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="carousel/owl.theme.default.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="carousel/owl.carousel.min.js"></script>
+</head>
+
+<body id="bdy">
+
+    <!--Barra estado-->
+    <div id="estado_juego">
+        En espera...
+    </div>
+
+    <!--Tablero-->
+    <div id="inf_jug">
+
+        <!--Carta en juego-->
+        <div id="main_tab">
+            <div id="tab_tl">
+                Tablero
+            </div>
+            <div id="tablero">
+                <div id="info_tablero">
+                    <img id="carta_tablero" src="img/cartas/cara.png">
+                    <div id="color_tablero"></div>
+                </div>
+            </div>
+        </div>
+
+        <!--Otro-->
+        <div id="ot_2">
+
+            <!--Info Jugadores-->
+            <div id="jugadores">
+
+                <table id="jugadores_tabla" class="table">
+                    <tbody id="jugadores_tabla_body">
+                        <tr>
+                            <th>Jugador</th>
+                            <th>Cartas</th>
+                        </tr>
+                        <tr>
+                            <td>--</td>
+                            <td>--</td>
+                        </tr>
+                        <tr>
+                            <td>--</td>
+                            <td>--</td>
+                        </tr>
+                        <tr>
+                            <td>--</td>
+                            <td>--</td>
+                        </tr>
+                        <tr>
+                            <td>--</td>
+                            <td>--</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!--Mazo-->
+            <div id="mazo_cont">
+                <!--Titulo-->
+                <div class="font-weight-bold" id="mazo_titulo">
+                    Mazo
+                </div>
+                <!--Carta y boton-->
+                <div id="mazo">
+                    <button class="btn" id="btn_accion">Tomar Carta</button>
+                    <img id="carta_mazo" src="img/cartas/cara.png">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="jugador_local">
+        <!--Informacion del jugador local-->
+        <div id="jg_lc_opt">
+            <div id="jugador_info">Sin Cartas</div>
+            <button id="iniciar_juego">Iniciar</button>
+            <button id="salir_juego">Salir</button>
+        </div>
+        <!--Baraja de cartas del jugador-->
+        <div id="baraja" class="owl-carousel"></div>
+    </div>
+
+
+
+    <!-- Modal Colores -->
+    <div class="modal fade" id="modal_colores" tabindex="-1" role="dialog" aria-labelledby="mdl_cls_center" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mdl_cls_title">Seleccione un color</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div id="mdl_cls_body" class="modal-body">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div id="md_amarillo" class="modal_color"></div>
+                                </td>
+                                <td>
+                                    <div id="md_verde" class="modal_color"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div id="md_azul" class="modal_color"></div>
+                                </td>
+                                <td>
+                                    <div id="md_rojo" class="modal_color"></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Mensajes-->
+    <div class="modal fade" id="modal_mensajes" tabindex="-1" role="dialog" aria-labelledby="mdl_center" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mdl_msgs_title">Informacion</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                </div>
+                <div id="mdl-msg-txt" class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Script-->
+    <script type="text/javascript" src="juego.js"></script>
+    <script type="text/javascript" src="conexion.js"></script>
+</body>
+
+</html>
